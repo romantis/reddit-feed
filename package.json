@@ -1,0 +1,31 @@
+{
+  "name": "elm-reddit",
+  "version": "0.1.0",
+  "description": "",
+  "main": "api.js",
+  "dependencies": {
+    "normalize.css": "^4.2.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "css-loader": "^0.23.1",
+    "elm-webpack-loader": "^3.0.3",
+    "file-loader": "^0.9.0",
+    "json-server": "^0.8.16",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "romantis",
+  "license": "MIT"
+}
