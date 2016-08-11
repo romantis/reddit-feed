@@ -11,7 +11,7 @@ import Shared.Header as Header
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
+update msg ({header, reddit} as model) =
     case msg of
         RedditMsg subMsg ->
             let 
@@ -27,9 +27,27 @@ update msg model =
             let 
                 (subModel, subCmd) =
                     Header.update subMsg model.header
+                
+                nextTopic =
+                    subModel.selected
+
+                redditCmd = 
+                    if model.header.selected == subModel.selected then 
+                        Cmd.none 
+                    else 
+                        Cmd.map 
+                            RedditMsg 
+                            (Reddit.fetchIfNeeded nextTopic model.reddit)
+                
             in
-                ( { model | header = subModel }
-                , Cmd.map HeaderMsg subCmd
+                ({ model 
+                    | header = subModel
+                    , reddit = {reddit |  selected = nextTopic}  
+                 }
+                , Cmd.batch 
+                    [ Cmd.map HeaderMsg subCmd
+                    , redditCmd
+                    ]
                 )
 
 

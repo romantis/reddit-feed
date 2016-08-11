@@ -6,27 +6,17 @@ import Html.App as App
 
 import Messages exposing (Msg(..))
 import Models exposing (Model)
-import Routing exposing (Route(..), routeString)
 
 import Reddit.Main as Reddit
-import NotFound.Main as NotFound
+-- import NotFound.Main as NotFound
 
 import Shared.Header as Header
 
 
 view : Model -> Html Msg
-view model =
+view {header, reddit} =
   div [] 
-    [ App.map HeaderMsg ( Header.view model.header)
-    , page model
+    [ App.map HeaderMsg ( Header.view header)
+    , App.map RedditMsg (Reddit.view reddit)
     ] 
 
-
-page : Model -> Html Msg
-page model = 
-    case model.route of 
-        RedditRoute _ ->
-            App.map RedditMsg (Reddit.view model.reddit)  
-        
-        NotFoundRoute ->
-            NotFound.view

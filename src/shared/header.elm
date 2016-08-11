@@ -4,8 +4,8 @@ import Html exposing (..)
 import Html.Attributes exposing (classList, href)
 -- import Html.Events exposing (onClick)
 import Shared.Helpers exposing (hrefClick)
+import Navigation  exposing (modifyUrl)
 
-import Navigation
 
 (=>) : a -> b -> ( a, b )
 (=>) = (,)
@@ -26,7 +26,7 @@ init topics selected =
 
 
 type Msg 
-    = Navigate String
+    = Select String
 
 
 
@@ -34,9 +34,9 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
 
-        Navigate url ->
-            ( model
-            , Navigation.newUrl url
+        Select topic ->
+            ( {model | selected = topic}
+            , modifyUrl ("#" ++ topic)
             )
 
 
@@ -49,16 +49,16 @@ view {topics, selected} =
 
 
 navItem : String -> String -> Html Msg
-navItem currentRoute route =
+navItem currentRoute topic =
     let
         url = 
-            "#" ++ route
+            "/" ++ topic
     in
         a 
-            [ classList ["active" => (currentRoute == route) ]
-            , hrefClick Navigate url
+            [ classList ["active" => (currentRoute == topic) ]
+            , hrefClick Select topic
             , href url 
             ]
-            [ text route ]
+            [ text topic ]
 
 

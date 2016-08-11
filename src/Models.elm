@@ -1,6 +1,5 @@
 module Models exposing (..)
 
-import Routing exposing (routeString)
 import Reddit.Main as Reddit
 
 import Shared.Header as Header
@@ -8,7 +7,7 @@ import Shared.Header as Header
 
 
 type alias Model =
-    { route : Routing.Route
+    { selected : String
     , header : Header.Model
     , reddit : Reddit.Model
     }
@@ -17,13 +16,10 @@ type alias Model =
 topics = 
     ["reactjs", "angular", "elm"]
 
-initModel : Routing.Route -> Model
-initModel route =
-    let 
-        rs = 
-            routeString route
-    in
-        { route = route
-        , header = Header.init topics rs
-        , reddit = Reddit.init rs
-        }
+
+initModel : String -> Model
+initModel topic  =
+    { selected = topic
+    , header = Header.init topics topic
+    , reddit = Reddit.init topic
+    }

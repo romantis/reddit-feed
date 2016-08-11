@@ -25,8 +25,8 @@ type alias Model =
 
 
 init : String -> Model
-init route =
-    Model Dict.empty route
+init topic =
+    Model Dict.empty topic
 
 
 
@@ -34,6 +34,7 @@ init route =
 type Msg
     = FetchFail Http.Error 
     | FetchSuccess Reddit
+    | Select String
     -- | FetchReddit String 
 
 
@@ -51,7 +52,11 @@ update msg ({reddits, selected} as model) =
                     insert selected reddit reddits}
             , Cmd.none
             )
-
+        
+        Select s -> 
+            ( { model | selected = s}
+            , Cmd.none
+            )
         -- FetchReddit topic ->
         --     ( model
         --     , fetchReddit topic
@@ -68,7 +73,13 @@ view {reddits, selected} =
             Nothing ->
                 div [] [text ("Loading " ++ selected ++ " reddit...")]
             Just rx ->
-                ol [] (List.map redditItemView rx) 
+                div [] 
+                    [ h2 [] 
+                        [ text "Reddit: " 
+                        , b [] [text selected] 
+                        ]
+                    , ol [] (List.map redditItemView rx) 
+                    ]
     
 
 
@@ -88,7 +99,19 @@ redditItemView r =
 fetchReddit : String -> Cmd Msg
 fetchReddit route =
     Http.get decoder (redditUrl route)
-        |> Task.perform FetchFail FetchSuccess 
+        |> Task.perform FetchFail FetchSuccess
+
+fetchIfNeeded : String -> Model -> Cmd Msg 
+fetchIfNeeded nextTopic model =
+    let 
+        isThere =
+            Dict.member nextTopic model.reddits
+    in
+        if isThere then 
+            Cmd.none 
+        else 
+            fetchReddit nextTopic
+
 
 redditUrl : String -> String
 redditUrl route = 
