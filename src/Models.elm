@@ -14,13 +14,16 @@ type alias Model =
     }
 
 
-initialModel : Routing.Route -> Model
-initialModel route =
+topics = 
+    ["reactjs", "angular", "elm"]
+
+initModel : Routing.Route -> Model
+initModel route =
     let 
         rs = 
             routeString route
     in
         { route = route
-        , header = Header.init rs
+        , header = Header.init topics rs
         , reddit = Reddit.init rs
         }

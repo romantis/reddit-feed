@@ -3,7 +3,7 @@ module Main exposing (main)
 import Navigation
 import Dict
 import Messages exposing (Msg(..))
-import Models exposing (Model, initialModel)
+import Models exposing (Model, initModel)
 import View exposing (view)
 import Update exposing (update)
 import Routing exposing (Route(..), routeString)
@@ -20,7 +20,7 @@ init result =
             Routing.routeFromResult result
         
         model =
-            initialModel currentRoute
+            initModel currentRoute
     in
         ( model
         , urlUpdCmd model 
@@ -74,6 +74,6 @@ main =
         { init = init
         , view = view
         , update = update
-        , urlUpdate = urlUpdate
         , subscriptions = subscriptions
+        , urlUpdate = urlUpdate
         }

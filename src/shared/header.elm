@@ -18,8 +18,17 @@ type alias Model =
     }
 
 
+init : List String -> String -> Model
+init topics selected = 
+    Model
+        topics 
+        selected
+
+
 type Msg 
     = Navigate String
+
+
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -29,15 +38,6 @@ update msg model =
             ( model
             , Navigation.newUrl url
             )
-
-
-
-
-init : String -> Model
-init route = 
-    Model
-        ["reactjs", "angular", "elm"] 
-        route
 
 
 view : Model -> Html Msg

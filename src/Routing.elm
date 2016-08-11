@@ -4,6 +4,8 @@ import String
 import Navigation
 import UrlParser exposing (..)
 
+-- import Models exposing (topics)
+
 
 type Route
     = NotFoundRoute
@@ -13,18 +15,18 @@ type Route
 routeString : Route -> String
 routeString route =
     case route of
-        RedditRoute s ->
-            s 
-        _ ->
-            ""
+        RedditRoute s -> s 
+        _ -> ""
+            
         
-
+-- format RedditRoute (s "")
+-- format RedditRoute (string)
 matchers : Parser (Route -> a) a
 matchers =
     oneOf
-        [ format RedditRoute (string)
-        -- , format RedditRoute (s "")
+        [format RedditRoute (string)
         ]
+         
 
 
 hashParser : Navigation.Location -> Result String Route
