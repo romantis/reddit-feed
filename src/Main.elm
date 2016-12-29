@@ -1,30 +1,29 @@
 module Main exposing (main)
 
-import Html.App as App
+import Html
 import Messages exposing (Msg(..))
 import Models exposing (Model, initModel)
 import View exposing (view)
 import Update exposing (update)
 
-import Reddit.Main exposing (fetchReddit)
+import Reddit.Main exposing (fetch)
 
 
 init : ( Model, Cmd Msg )
 init  =
-    ( initModel "nodejs"
-    , Cmd.map RedditMsg (fetchReddit "nodejs")
+    ( initModel "elm"
+    , Cmd.map RedditMsg (fetch "elm")
     ) 
 
 
 subscriptions : Model -> Sub Msg 
-subscriptions model =
+subscriptions _ =
     Sub.none 
         
 
-
-main : Program Never
+main : Program Never Model Msg
 main =
-    App.program
+    Html.program
         { init = init
         , view = view
         , update = update

@@ -3,11 +3,15 @@ module Reddit.Main exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (href)
 import Http 
-import Json.Decode as Decode exposing ((:=))
+import Json.Decode as JD exposing (Decoder)
+import Json.Decode.Pipeline exposing (decode, required)
 -- import Json.Encode as Encode
-import Task
 import List
-import Dict exposing (Dict, insert)
+import Dict exposing (Dict)
+
+
+
+
 
 
 type alias RedditItem =
@@ -24,6 +28,9 @@ type alias Model =
     }
 
 
+
+
+
 init : String -> Model
 init topic =
     Model Dict.empty topic
@@ -31,36 +38,35 @@ init topic =
 
 
 
+
 type Msg
-    = FetchFail Http.Error 
-    | FetchSuccess Reddit
-    | Select String
-    -- | FetchReddit String 
+    = Select String
+    | FetchReddit (Result Http.Error Reddit)
+
+
+
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg ({reddits, selected} as model) = 
     case msg of 
-        FetchFail _ ->
-            ( model
-            , Cmd.none
-            )
+        FetchReddit (Err err) ->
+            let 
+                _ = Debug.log "FetchReddit error" err
+            in
+                model ! []
         
-        FetchSuccess reddit ->
-            ({ model 
+        FetchReddit (Ok reddit) ->
+            { model 
                 | reddits = 
-                    insert selected reddit reddits}
-            , Cmd.none
-            )
-        
+                    Dict.insert selected reddit reddits} ! []
+            
         Select s -> 
-            ( { model | selected = s}
-            , Cmd.none
-            )
-        -- FetchReddit topic ->
-        --     ( model
-        --     , fetchReddit topic
-        --     )
+            { model | selected = s} ! []
+
+
+
+
 
 
 view : Model -> Html Msg
@@ -92,14 +98,14 @@ redditItemView r =
         ] 
 
 
-{- #####################
-         Commends
-########################-}
+{-------- Commends and Decoders ---------------------------------------------------------- -}
 
-fetchReddit : String -> Cmd Msg
-fetchReddit route =
-    Http.get decoder (redditUrl route)
-        |> Task.perform FetchFail FetchSuccess
+
+fetch : String -> Cmd Msg
+fetch route =
+    Http.get (redditUrl route) decoder
+        |> Http.send FetchReddit
+
 
 fetchIfNeeded : String -> Model -> Cmd Msg 
 fetchIfNeeded nextTopic model =
@@ -110,7 +116,7 @@ fetchIfNeeded nextTopic model =
         if isThere then 
             Cmd.none 
         else 
-            fetchReddit nextTopic
+            fetch nextTopic
 
 
 redditUrl : String -> String
@@ -118,13 +124,17 @@ redditUrl route =
     "https://www.reddit.com/r/" ++ route ++".json"
 
 
-decoder : Decode.Decoder (List RedditItem)
+decoder : Decoder (List RedditItem)
 decoder =
-    Decode.at ["data", "children"] (Decode.list ("data":= redditDecoder))
+    JD.at 
+        ["data", "children"] 
+        (JD.list decodeReddit)
 
 
-redditDecoder : Decode.Decoder RedditItem
-redditDecoder =
-    Decode.object2 RedditItem
-        ("title" := Decode.string)
-        ("url" := Decode.string)
+decodeReddit : Decoder RedditItem
+decodeReddit =
+    JD.field "data"
+        ( decode RedditItem
+            |> required "title" JD.string
+            |> required "url" JD.string
+        )
