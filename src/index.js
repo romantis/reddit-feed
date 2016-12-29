@@ -1,8 +1,6 @@
 'use strict';
 
-require('normalize.css');
 require('./main.css');
-
 
 
 // Require index.html so it gets copied to dist
