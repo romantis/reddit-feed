@@ -1,7 +1,7 @@
 var path = require("path");
 
 module.exports = {
-  context : path.resolve('src'),
+  context: path.resolve('src'),
   entry: {
     app: [
       './index'
@@ -24,14 +24,14 @@ module.exports = {
         ]
       },
       {
-        test:    /\.html$/,
+        test: /\.html$/,
         exclude: /node_modules/,
-        loader:  'file?name=[name].[ext]',
+        loader: 'file?name=[name].[ext]',
       },
       {
-        test:    /\.elm$/,
+        test: /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-webpack',
+        loader: 'elm-webpack',
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -50,11 +50,10 @@ module.exports = {
     inline: true,
     contentBase: './',
     stats: { colors: true },
+    historyApiFallback: true
   },
 
   resolve: {
-		extensions: ['', '.js', '.es6']
-	}
-
-
+    extensions: ['', '.js', '.es6']
+  }
 };
