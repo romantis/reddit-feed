@@ -4,7 +4,6 @@
   "description": "",
   "main": "api.js",
   "dependencies": {
-    "normalize.css": "^5.0.0"
   },
   "scripts": {
     "build": "webpack",
