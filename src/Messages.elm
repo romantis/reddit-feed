@@ -1,9 +1,9 @@
 module Messages exposing (..)
 
-import Shared.Header as Header
+import Navigation.Main as Nav
 import Reddit.Main as Reddit
 
 type Msg
-  = HeaderMsg Header.Msg
+  = NavigationMsg Nav.Msg
   | RedditMsg Reddit.Msg
   

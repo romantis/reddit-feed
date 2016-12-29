@@ -8,13 +8,13 @@ import Models exposing (Model)
 
 import Reddit.Main as Reddit
 
-import Shared.Header as Header
+import Navigation.Main as Nav
 
 
 view : Model -> Html Msg
-view {header, reddit} =
+view {navigation, reddit} =
   div [] 
-    [ Html.map HeaderMsg ( Header.view header)
+    [ Html.map NavigationMsg ( Nav.view navigation)
     , Html.map RedditMsg (Reddit.view reddit)
     ] 
 

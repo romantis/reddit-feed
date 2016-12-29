@@ -6,12 +6,12 @@ import Models exposing (Model)
 
 import Messages exposing (Msg(..))
 import Reddit.Main as Reddit
-import Shared.Header as Header 
+import Navigation.Main as Nav
 
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg ({header, reddit} as model) =
+update msg ({navigation, reddit} as model) =
     case msg of
         RedditMsg subMsg ->
             let 
@@ -23,29 +23,27 @@ update msg ({header, reddit} as model) =
                 )
         
         
-        HeaderMsg subMsg ->
+        NavigationMsg subMsg -> 
             let 
                 (subModel, subCmd) =
-                    Header.update subMsg model.header
+                    Nav.update subMsg model.navigation
                 
                 nextTopic =
                     subModel.selected
 
                 redditCmd = 
-                    if model.header.selected == subModel.selected then 
+                    if model.navigation.selected == subModel.selected then 
                         Cmd.none 
                     else 
-                        Cmd.map 
-                            RedditMsg 
-                            (Reddit.fetchIfNeeded nextTopic model.reddit)
+                        Cmd.map RedditMsg (Reddit.fetchIfNeeded nextTopic model.reddit)
                 
             in
                 ({ model 
-                    | header = subModel
+                    | navigation = subModel
                     , reddit = {reddit |  selected = nextTopic}  
                  }
                 , Cmd.batch 
-                    [ Cmd.map HeaderMsg subCmd
+                    [ Cmd.map NavigationMsg subCmd
                     , redditCmd
                     ]
                 )

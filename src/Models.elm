@@ -2,13 +2,13 @@ module Models exposing (..)
 
 import Reddit.Main as Reddit
 
-import Shared.Header as Header
+import Navigation.Main as Nav
 
 
 
 type alias Model =
     { selected : String
-    , header : Header.Model
+    , navigation : Nav.Model
     , reddit : Reddit.Model
     }
 
@@ -20,6 +20,6 @@ topics =
 initModel : String -> Model
 initModel topic  =
     { selected = topic
-    , header = Header.init topics topic
+    , navigation = Nav.init topics topic
     , reddit = Reddit.init topic
     }

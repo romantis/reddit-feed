@@ -1,4 +1,4 @@
-module Shared.Header exposing (..)
+module Navigation.Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (classList, href)
