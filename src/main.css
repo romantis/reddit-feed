@@ -1,8 +1,14 @@
-html {font-size: 1em;}
+/*
+=========== Basic styles ===========
+*/
+html {font-size: 18px;}
 
 body {
   background-color: white;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 
+    "Segoe UI", "Roboto", "Oxygen", 
+    "Ubuntu", "Cantarell", "Fira Sans", 
+    "Droid Sans", "Helvetica Neue", sans-serif;
   font-weight: 400;
   line-height: 1.45;
   color: #333;
@@ -12,53 +18,96 @@ p {margin-bottom: 1.3em;}
 
 h1, h2, h3, h4 {
   font-family: "Roboto Slab", Georgia, serif;
-  margin: 1.414em 0 0.5em;
+  margin: 1.414rem 0 0.5rem;
   font-weight: inherit;
   line-height: 1.2;
 }
 
 h1 {
   margin-top: 0;
-  font-size: 2.074em;
+  font-size: 2.074rem;
 }
 
-h2 {font-size: 1.728em;}
+h2 {font-size: 1.728rem;}
 
-h3 {font-size: 1.44em;}
+h3 {font-size: 1.44rem;}
 
-h4 {font-size: 1.2em;}
+h4 {font-size: 1.2rem;}
 
-small, .font_small {font-size: 0.833em;}
+small, .font_small {font-size: 0.833rem;}
 
 
 
-/*====================================
-===========  Header Styles ===========
-=====================================*/
+/*
+=========== Min content ===========
+*/
 
-header {
-    background-color: cornflowerblue;
+.content {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    float: right;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
-header nav {
-    display: flex;
-    max-width: 50vw;
-    height: 50px;
-    align-items: center;
+@media screen and (min-width: 768px) {
+    .content {
+        width: calc(100vw - 12rem - 20px - 1px);
+    }
 }
 
-nav a {
-    margin-left: 35px;
+
+/*
+   ===========  Navigation Styles ===========
+*/
+
+.navigation {
+    width: 12rem;
+    background-color: white;
+}
+
+.navigation-item {
+    margin-left: 20px;
     font-size: 1.3em;;
-}
-
-nav a:hover,
-nav a:active,
-a.active {
-    color: gold;
-}
-
-nav a {
-    color: white;
+    color: #555;
     text-decoration: none;
+}
+
+.navigation-item:hover,
+.navigation-item:active,
+.navigation-item.active {
+    color: cornflowerblue;
+}
+
+
+@media screen and (min-width: 768px) {
+    .navigation {
+        float: left;
+        padding-bottom: 2000em;
+        margin-bottom: -2000em;
+        overflow: hidden;
+        border-right: 1px solid #999;
+    }
+    
+    .navigation-item {
+        display: block;
+    }
+}
+
+
+
+/* 
+=========== Helper classes ===========
+*/
+
+.cf::before, .cf::after {
+    content:"";
+    display:table;
+}
+.cf::after {
+    clear:both;
+}
+.cf {
+    zoom:1;
 }

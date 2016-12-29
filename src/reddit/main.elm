@@ -1,7 +1,7 @@
 module Reddit.Main exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (href)
+import Html.Attributes exposing (href, class)
 import Http 
 import Json.Decode as JD exposing (Decoder)
 import Json.Decode.Pipeline exposing (decode, required)
@@ -79,7 +79,7 @@ view {reddits, selected} =
             Nothing ->
                 div [] [text ("Loading " ++ selected ++ " reddit...")]
             Just rx ->
-                div [] 
+                div [ class "content" ] 
                     [ h2 [] 
                         [ text "Reddit: " 
                         , b [] [text selected] 
