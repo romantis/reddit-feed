@@ -14,11 +14,11 @@ import Navigation.Main as Nav
 
 
 view : Model -> Html Msg
-view {navigation, reddit, newReddit} =
+view model =
   div [class "cf"] 
-    [ addRedditView newReddit
-    , Html.map NavigationMsg ( Nav.view navigation)
-    , Html.map RedditMsg (Reddit.view reddit)
+    [ addRedditView model.newReddit
+    , Nav.view model.selected model.redditList
+    , Html.map RedditMsg (Reddit.view model.reddit)
     ] 
 
 

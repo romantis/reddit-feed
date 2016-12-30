@@ -3,14 +3,13 @@ module Update exposing (..)
 import Messages exposing (Msg(..))
 import Models exposing (Model)
 
-
 import Messages exposing (Msg(..))
 import Reddit.Main as Reddit
-import Navigation.Main as Nav
 
+import Navigation  exposing (modifyUrl)
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg ({navigation, reddit, newReddit} as model) =
+update msg model =
     case msg of
         RedditMsg subMsg ->
             let 
@@ -21,31 +20,11 @@ update msg ({navigation, reddit, newReddit} as model) =
                 , Cmd.map RedditMsg subCmd
                 )
         
-        
-        NavigationMsg subMsg -> 
-            let 
-                (subModel, subCmd) =
-                    Nav.update subMsg model.navigation
-                
-                nextReddit =
-                    subModel.selected
+        Select selected ->
+            ( {model | selected = selected}
+            , modifyUrl ("#" ++ selected)
+            )
 
-                redditCmd = 
-                    if model.navigation.selected == subModel.selected then 
-                        Cmd.none 
-                    else 
-                        Cmd.map RedditMsg (Reddit.fetchIfNeeded nextReddit model.reddit)
-                
-            in
-                ({ model 
-                    | navigation = subModel
-                    , reddit = {reddit |  selected = nextReddit}  
-                 }
-                , Cmd.batch 
-                    [ Cmd.map NavigationMsg subCmd
-                    , redditCmd
-                    ]
-                )
         
         InputRedditName newReddit ->
             {model | newReddit = newReddit} ! []

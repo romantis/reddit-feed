@@ -4,7 +4,8 @@ import Html exposing (..)
 import Html.Attributes exposing (classList, href, class)
 -- import Html.Events exposing (onClick)
 import Shared.Helpers exposing (hrefClick)
-import Navigation  exposing (modifyUrl)
+import Models exposing (Reddit)
+import Messages exposing (Msg(..))
 
 
 (=>) : a -> b -> ( a, b )
@@ -12,47 +13,18 @@ import Navigation  exposing (modifyUrl)
 
 
 
-type alias Model =
-    { subreddits : List String
-    , selected : String
-    }
-
-
-init : List String -> String -> Model
-init subreddits selected = 
-    Model subreddits selected
-
-
-type Msg 
-    = Select String
-
-
-
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
-    case msg of
-
-        Select topic ->
-            ( {model | selected = topic}
-            , modifyUrl ("#" ++ topic)
-            )
-
-
-view : Model -> Html Msg
-view {subreddits, selected} =
+view : Reddit -> List Reddit -> Html Msg
+view selected redditList  =
     nav [ class "navigation"]
-        (List.map (navItem selected) subreddits)
+        (List.map (navItem selected) redditList)
 
 
-navItem : String -> String -> Html Msg
-navItem currentRoute topic =
+navItem : Reddit -> Reddit -> Html Msg
+navItem selected reddit  =
     a 
         [ class "navigation-item"
-        , classList ["active" => (currentRoute == topic) ]
-        , hrefClick Select topic
-        , href <|  "/" ++ topic
+        , classList ["active" => (reddit == selected) ]
+        , hrefClick Select reddit
+        , href <|  "/" ++ reddit
         ] 
-        [ text topic ]
-
-
-
+        [ text reddit ]
