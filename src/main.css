@@ -63,15 +63,16 @@ small, .font_small {font-size: 0.833rem;}
 */
 
 .navigation {
-    width: 12rem;
     background-color: white;
 }
 
 .navigation-item {
+    display: inline-block;
     margin-left: 20px;
     font-size: 1.3em;;
     color: #555;
     text-decoration: none;
+    text-transform: capitalize;
 }
 
 .navigation-item:hover,
@@ -83,6 +84,7 @@ small, .font_small {font-size: 0.833rem;}
 
 @media screen and (min-width: 768px) {
     .navigation {
+        width: 12rem;
         float: left;
         padding-bottom: 2000em;
         margin-bottom: -2000em;
@@ -110,4 +112,36 @@ small, .font_small {font-size: 0.833rem;}
 }
 .cf {
     zoom:1;
+}
+
+
+/*
+=========== Add Reddit panel
+*/
+
+.add-panel {
+    padding: .5rem;
+}
+
+.input-reddit {
+    padding-left: .5rem;
+}
+
+.add-btn {
+    background-color: cornflowerblue;
+    border-color: dodgerblue;
+    width: 3rem;
+    color: white;
+}
+
+.add-btn:hover,
+.add-btn:active {
+    background-color: dodgerblue;
+    border-color: cornflowerblue;
+}
+
+@media screen and (min-width: 768px) {
+    .input-reddit {
+        width: 7.2rem;
+    }
 }
