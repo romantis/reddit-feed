@@ -13,16 +13,14 @@ import Navigation  exposing (modifyUrl)
 
 
 type alias Model =
-    { topics : List String
+    { subreddits : List String
     , selected : String
     }
 
 
 init : List String -> String -> Model
-init topics selected = 
-    Model
-        topics 
-        selected
+init subreddits selected = 
+    Model subreddits selected
 
 
 type Msg 
@@ -41,9 +39,9 @@ update msg model =
 
 
 view : Model -> Html Msg
-view {topics, selected} =
+view {subreddits, selected} =
     nav [ class "navigation"]
-        (List.map (navItem selected) topics)
+        (List.map (navItem selected) subreddits)
 
 
 navItem : String -> String -> Html Msg
