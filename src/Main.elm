@@ -11,7 +11,7 @@ import Reddit.Main exposing (fetch)
 
 init : ( Model, Cmd Msg )
 init  =
-    ( initModel "elm"
+    ( initModel "elm" ["reactjs", "angular", "elm"]
     , Cmd.map RedditMsg (fetch "elm")
     ) 
 

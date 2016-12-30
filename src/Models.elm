@@ -6,20 +6,21 @@ import Navigation.Main as Nav
 
 
 
+type alias Reddit = String
+
 type alias Model =
-    { selected : String
+    { selected : Reddit
     , navigation : Nav.Model
     , reddit : Reddit.Model
+    , newReddit: Reddit
     }
 
 
-topics = 
-    ["reactjs", "angular", "elm"]
 
-
-initModel : String -> Model
-initModel topic  =
-    { selected = topic
-    , navigation = Nav.init topics topic
-    , reddit = Reddit.init topic
+initModel : Reddit -> List Reddit -> Model
+initModel selected myReddits  =
+    { selected = selected
+    , navigation = Nav.init myReddits selected
+    , reddit = Reddit.init selected
+    , newReddit = ""
     }
