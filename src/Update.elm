@@ -9,9 +9,8 @@ import Reddit.Main as Reddit
 import Navigation.Main as Nav
 
 
-
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg ({navigation, reddit} as model) =
+update msg ({navigation, reddit, newReddit} as model) =
     case msg of
         RedditMsg subMsg ->
             let 
@@ -28,24 +27,43 @@ update msg ({navigation, reddit} as model) =
                 (subModel, subCmd) =
                     Nav.update subMsg model.navigation
                 
-                nextTopic =
+                nextReddit =
                     subModel.selected
 
                 redditCmd = 
                     if model.navigation.selected == subModel.selected then 
                         Cmd.none 
                     else 
-                        Cmd.map RedditMsg (Reddit.fetchIfNeeded nextTopic model.reddit)
+                        Cmd.map RedditMsg (Reddit.fetchIfNeeded nextReddit model.reddit)
                 
             in
                 ({ model 
                     | navigation = subModel
-                    , reddit = {reddit |  selected = nextTopic}  
+                    , reddit = {reddit |  selected = nextReddit}  
                  }
                 , Cmd.batch 
                     [ Cmd.map NavigationMsg subCmd
                     , redditCmd
                     ]
                 )
-
-
+        
+        InputRedditName newReddit ->
+            {model | newReddit = newReddit} ! []
+        
+        
+        AddNewReddit ->
+            model ! []
+            -- let 
+            --     reddit =
+            --         newReddit
+            --             |> String.trim
+            --             |> String.toLower
+                        
+            --     isValid =
+            --         String.isEmpty reddit
+                
+            --     updModel =
+            --         if isValid then
+            --             {model | }
+            -- in
+            --     updModel ! []
