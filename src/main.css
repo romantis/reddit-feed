@@ -51,6 +51,12 @@ small, .font_small {font-size: 0.833rem;}
     padding-right: 10%;
 }
 
+.reddit-selected {
+    font-weight: bold;
+    text-transform: capitalize;
+    color: cornflowerblue;
+}
+
 @media screen and (min-width: 768px) {
     .content {
         width: calc(100vw - 12rem - 20px - 1px);

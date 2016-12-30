@@ -82,7 +82,7 @@ view {reddits, selected} =
                 div [ class "content" ] 
                     [ h2 [] 
                         [ text "Reddit: " 
-                        , b [] [text selected] 
+                        , span [ class "reddit-selected"] [ text selected ] 
                         ]
                     , ol [] (List.map redditItemView rx) 
                     ]
