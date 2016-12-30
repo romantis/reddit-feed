@@ -21,9 +21,23 @@ update msg model =
                 )
         
         Select selected ->
-            ( {model | selected = selected}
-            , modifyUrl ("#" ++ selected)
-            )
+            let 
+                redditCmd = 
+                    if selected == model.selected then 
+                        Cmd.none 
+                    else 
+                        Cmd.map RedditMsg 
+                            (Reddit.fetchIfNeeded selected model.reddit)
+                reddit =
+                    model.reddit
+            in
+                { model 
+                    | selected = selected
+                    , reddit = {reddit | selected = selected}  
+                 } !
+                    [ redditCmd
+                    , modifyUrl ("#" ++ selected)
+                    ]
 
         
         InputRedditName newReddit ->
@@ -31,18 +45,25 @@ update msg model =
         
         
         AddNewReddit ->
-            model ! []
-            -- let 
-            --     reddit =
-            --         newReddit
-            --             |> String.trim
-            --             |> String.toLower
+            let 
+                reddit =
+                    model.newReddit
+                        |> String.trim
+                        |> String.toLower
                         
-            --     isValid =
-            --         String.isEmpty reddit
+                isValid =
+                    not <| String.isEmpty reddit
+                        
                 
-            --     updModel =
-            --         if isValid then
-            --             {model | }
-            -- in
-            --     updModel ! []
+                updModel =
+                    if isValid then
+                        {model 
+                            | redditList = model.redditList ++ [reddit]
+                            , newReddit = "" }
+                    else
+                        model
+            in
+                updModel ! []
+
+
+            
