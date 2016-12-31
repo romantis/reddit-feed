@@ -1,7 +1,7 @@
 module Update exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model)
+import Models exposing (Model, Menu(..))
 
 import Messages exposing (Msg(..))
 import Reddit.Main as Reddit
@@ -66,6 +66,13 @@ update msg model =
             in
                 updModel ! 
                     [setStorage updModel.redditList]
+        
+
+        SelectMenu menu ->
+            if menu /= model.iconMenu then
+                {model | iconMenu = menu} ! []
+            else 
+                {model | iconMenu = Default } ! []
 
 
             

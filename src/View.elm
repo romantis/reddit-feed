@@ -16,6 +16,6 @@ import Navigation.Main as Nav
 view : Model -> Html Msg
 view model =
   div [class "cf"] 
-    [ Nav.view model.selected model.newReddit model.redditList
+    [ Nav.view model
     , Html.map RedditMsg (Reddit.view model.reddit)
     ]

@@ -7,7 +7,7 @@ import Models exposing (Model, Reddit, initModel)
 import View exposing (view)
 import Update exposing (update)
 
-import Reddit.Main exposing (fetch)
+-- import Reddit.Main exposing (fetch)
 
 
 init : Maybe (List Reddit) -> ( Model, Cmd Msg )

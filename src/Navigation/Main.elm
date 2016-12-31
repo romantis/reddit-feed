@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (classList, href, class, placeholder, type_, value)
 import Html.Events exposing (onInput, onClick)
 import Shared.Helpers exposing (hrefClick)
-import Models exposing (Reddit)
+import Models exposing (Reddit, Model, Menu(..))
 import Messages exposing (Msg(..))
 
 
@@ -12,12 +12,13 @@ import Messages exposing (Msg(..))
 (=>) = (,)
 
 
-
-view : Reddit -> Reddit -> List Reddit -> Html Msg
-view selected newReddit redditList =
-    nav [ class "navigation"]
-        ([ addRedditView newReddit
-        ] ++ (List.map (navItem selected) redditList))
+view : Model -> Html Msg
+view model =
+    nav [ class "navigation"] <| List.concat
+        [ [iconMenuView model.iconMenu]
+        , if model.iconMenu == Add then [addRedditView model.newReddit] else []
+        , List.map (navItem model.selected) model.redditList
+        ]
 
 
 navItem : Reddit -> Reddit -> Html Msg
@@ -29,6 +30,28 @@ navItem selected reddit  =
         , href <|  "/" ++ reddit
         ] 
         [ text reddit ]
+
+
+iconMenuView : Menu -> Html Msg
+iconMenuView menu =
+    let 
+        activeClass current =
+            classList 
+                ["active" => (menu == current) ]
+    in 
+        div [ class "icon-navigation"]
+            [ i 
+                [ class "fa fa-pencil-square-o fa-lg"
+                , activeClass Edit
+                , onClick <| SelectMenu Edit
+                ] []
+            , i 
+                [ class "fa fa-plus fa-lg"
+                , activeClass Add
+                , onClick <| SelectMenu Add
+                ] []
+            ]
+
 
 addRedditView : String -> Html Msg
 addRedditView newReddit =
@@ -46,3 +69,4 @@ addRedditView newReddit =
             ]
             [ text "add"]
         ]
+

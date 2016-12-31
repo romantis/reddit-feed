@@ -73,7 +73,7 @@ small, .font_small {font-size: 0.833rem;}
 }
 
 .navigation-item {
-    display: inline-block;
+    display: block;
     margin-left: 20px;
     font-size: 1.3em;;
     color: #555;
@@ -87,6 +87,20 @@ small, .font_small {font-size: 0.833rem;}
     color: cornflowerblue;
 }
 
+.icon-navigation {
+    text-align: right;
+}
+
+.icon-navigation i {
+    padding: .5rem;
+    color: lightsteelblue;
+}
+
+.icon-navigation i:hover,
+.icon-navigation i:active,
+.icon-navigation i.active {
+    color: cornflowerblue;
+}
 
 @media screen and (min-width: 768px) {
     .navigation {
@@ -98,9 +112,6 @@ small, .font_small {font-size: 0.833rem;}
         border-right: 1px solid #999;
     }
     
-    .navigation-item {
-        display: block;
-    }
 }
 
 
