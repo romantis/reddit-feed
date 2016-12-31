@@ -70,10 +70,15 @@ small, .font_small {font-size: 0.833rem;}
 
 .navigation {
     background-color: white;
-}
+}   
 
 .navigation-item {
-    display: block;
+    display: flex;
+    align-items: baseline;
+}
+
+.navigation-item  a {
+    display: inline-block;
     margin-left: 20px;
     font-size: 1.3em;;
     color: #555;
@@ -81,9 +86,18 @@ small, .font_small {font-size: 0.833rem;}
     text-transform: capitalize;
 }
 
-.navigation-item:hover,
-.navigation-item:active,
-.navigation-item.active {
+.navigation-item > i {
+    color: silver;
+    margin-right: 1rem;
+}
+
+.navigation-item > i:hover {
+    color: indianred;
+}
+
+.navigation-item a:hover,
+.navigation-item a:active,
+.navigation-item a.active {
     color: cornflowerblue;
 }
 
@@ -93,7 +107,7 @@ small, .font_small {font-size: 0.833rem;}
 
 .icon-navigation i {
     padding: .5rem;
-    color: lightsteelblue;
+    color: silver;
 }
 
 .icon-navigation i:hover,

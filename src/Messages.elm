@@ -9,3 +9,4 @@ type Msg
   | InputRedditName Models.Reddit
   | AddNewReddit
   | SelectMenu Menu
+  | RemoveReddit Models.Reddit

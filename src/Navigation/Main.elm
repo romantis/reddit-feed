@@ -17,19 +17,27 @@ view model =
     nav [ class "navigation"] <| List.concat
         [ [iconMenuView model.iconMenu]
         , if model.iconMenu == Add then [addRedditView model.newReddit] else []
-        , List.map (navItem model.selected) model.redditList
+        , List.map (navItem model.selected (model.iconMenu == Edit)) model.redditList
         ]
 
 
-navItem : Reddit -> Reddit -> Html Msg
-navItem selected reddit  =
-    a 
-        [ class "navigation-item"
-        , classList ["active" => (reddit == selected) ]
-        , hrefClick Select reddit
-        , href <|  "/" ++ reddit
-        ] 
-        [ text reddit ]
+navItem : Reddit -> Bool -> Reddit -> Html Msg
+navItem selected isEdit reddit  =
+    div [ class "cf navigation-item"]
+        [ a
+            [ class ""
+            , classList ["active" => (reddit == selected) ]
+            , hrefClick Select reddit
+            , href <|  "/" ++ reddit
+            ] 
+            [ text reddit ]
+        , if isEdit then
+            i 
+                [ class "fa fa-trash-o "
+                , onClick <| RemoveReddit reddit
+                ] []
+         else text ""
+        ]
 
 
 iconMenuView : Menu -> Html Msg

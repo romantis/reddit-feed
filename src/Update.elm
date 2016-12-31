@@ -76,3 +76,14 @@ update msg model =
 
 
             
+        RemoveReddit reddit ->
+            let 
+                redditList = 
+                    List.filter ((/=) reddit) model.redditList
+                updCmd =
+                    if redditList /= model.redditList then
+                        setStorage redditList
+                    else 
+                        Cmd.none
+            in
+                { model | redditList = redditList } ! [updCmd]
