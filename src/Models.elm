@@ -15,10 +15,10 @@ type alias Model =
 
 
 
-initModel : Reddit -> List Reddit -> Model
-initModel selected myReddits  =
-    { selected = selected
-    , redditList = myReddits
-    , reddit = Reddit.init selected
+initModel : List Reddit -> Model
+initModel reddits=
+    { selected = ""
+    , redditList = reddits
+    , reddit = Reddit.init ""
     , newReddit = ""
     }

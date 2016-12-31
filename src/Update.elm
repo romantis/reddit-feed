@@ -5,6 +5,7 @@ import Models exposing (Model)
 
 import Messages exposing (Msg(..))
 import Reddit.Main as Reddit
+import Ports exposing (setStorage)
 
 import Navigation  exposing (modifyUrl)
 
@@ -63,7 +64,8 @@ update msg model =
                     else
                         model
             in
-                updModel ! []
+                updModel ! 
+                    [setStorage updModel.redditList]
 
 
             
