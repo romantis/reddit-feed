@@ -14,7 +14,9 @@ import Messages exposing (Msg(..))
 
 view : Model -> Html Msg
 view model =
-    nav [ class "navigation"] <| List.concat
+    nav [ class "navigation"
+        , classList ["edit-mode" => (model.iconMenu == Edit) ]
+        ] <| List.concat
         [ [iconMenuView model.iconMenu]
         , if model.iconMenu == Add then [addRedditView model.newReddit] else []
         , List.map (navItem model.selected (model.iconMenu == Edit)) model.redditList
@@ -22,22 +24,26 @@ view model =
 
 
 navItem : Reddit -> Bool -> Reddit -> Html Msg
-navItem selected isEdit reddit  =
-    div [ class "cf navigation-item"]
-        [ a
-            [ class ""
-            , classList ["active" => (reddit == selected) ]
-            , hrefClick Select reddit
-            , href <|  "/" ++ reddit
-            ] 
-            [ text reddit ]
-        , if isEdit then
+navItem selected editing reddit  =
+    let
+        deleteBtn =
             i 
                 [ class "fa fa-trash-o "
                 , onClick <| RemoveReddit reddit
                 ] []
-         else text ""
-        ]
+        
+        aAtrs =
+            [ classList ["active" => (reddit == selected) ]
+            , hrefClick Select reddit
+            , href <|  "/" ++ reddit
+            ] 
+    in
+        div [ class "cf navigation-item"]
+            [ a
+                (if not editing then aAtrs else [ href "#"])
+                [ text reddit ]
+            , if editing then deleteBtn else text ""
+            ]
 
 
 iconMenuView : Menu -> Html Msg

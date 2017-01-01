@@ -73,22 +73,22 @@ small, .font_small {font-size: 0.833rem;}
 }   
 
 .navigation-item {
-    display: flex;
-    align-items: baseline;
+    padding-right: 1rem;
+    padding-left: 1rem;
 }
 
 .navigation-item  a {
-    display: inline-block;
-    margin-left: 20px;
-    font-size: 1.3em;;
+    display: table-cell;
+    width: 100%;
+    font-size: 1.2rem;;
     color: #555;
     text-decoration: none;
     text-transform: capitalize;
 }
 
 .navigation-item > i {
+    display: table-cell;
     color: silver;
-    margin-right: 1rem;
 }
 
 .navigation-item > i:hover {
@@ -99,6 +99,11 @@ small, .font_small {font-size: 0.833rem;}
 .navigation-item a:active,
 .navigation-item a.active {
     color: cornflowerblue;
+}
+
+.edit-mode a:hover {
+    cursor: default;
+    color: #555;
 }
 
 .icon-navigation {
