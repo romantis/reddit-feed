@@ -2,40 +2,28 @@ module Update exposing (..)
 
 import Messages exposing (Msg(..))
 import Models exposing (Model, SubReddit, Menu(..))
-
 import Messages exposing (Msg(..))
-import Reddit.Articles as Articles
 import Ports exposing (setStorage)
+import Reddit.Articles exposing (fetchIfNeeded)
 
 import Navigation  exposing (modifyUrl)
+import Dict
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
-        ArticlesMsg subMsg ->
-            let 
-                (subModel, subCmd) =
-                    Articles.update subMsg model.articles
-            in
-                ( { model | articles = subModel }
-                , Cmd.map ArticlesMsg subCmd
-                )
-        
         Select selected ->
             let 
                 redditCmd = 
                     if selected == model.selected then 
                         Cmd.none 
                     else 
-                        Cmd.map ArticlesMsg 
-                            (Articles.fetchIfNeeded selected model.articles)
+                        fetchIfNeeded selected model.articles
                 articles =
                     model.articles
             in
                 { model 
-                    | selected = selected
-                    , articles = {articles | selected = selected}  
-                 } !
+                    | selected = selected } !
                     [ redditCmd
                     , modifyUrl ("#" ++ selected)
                     ]
@@ -87,3 +75,14 @@ update msg model =
                         Cmd.none
             in
                 { model | subRedditList = subRedditList } ! [updCmd] 
+
+        FetchReddit (Err err) ->
+            let 
+                _ = Debug.log "FetchReddit error" err
+            in
+                model ! []
+        
+        FetchReddit (Ok reddit) ->
+            { model 
+                | articles = 
+                    Dict.insert model.selected reddit model.articles} ! []

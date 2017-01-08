@@ -23,7 +23,7 @@ init mreddits  =
         
         initCmd =
             if initSubReddit /= "" then
-                Cmd.map ArticlesMsg <| fetch initSubReddit
+                fetch initSubReddit
             else 
                 Cmd.none
 

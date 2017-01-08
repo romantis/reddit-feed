@@ -1,6 +1,6 @@
 module Models exposing (..)
 
-import Reddit.Articles as Articles
+import Dict exposing (Dict)
 
 
 
@@ -8,6 +8,14 @@ type alias SubReddit =
     { title : String
     , displayName : String
     }
+
+type alias RedditArticle =
+    { title: String 
+    , url: String
+    }
+
+type alias Articles =
+    Dict String (List RedditArticle)
 
 type Menu
     = Edit
@@ -17,7 +25,7 @@ type Menu
 type alias Model =
     { selected : String
     , subRedditList : List SubReddit
-    , articles : Articles.Model
+    , articles : Articles
     , newReddit: String
     , iconMenu : Menu
     }
@@ -36,7 +44,7 @@ initModel subReddits=
     in
         { selected = selected
         , subRedditList = subReddits
-        , articles = Articles.init selected
+        , articles = Dict.empty
         , newReddit = ""
         , iconMenu = Default
         }

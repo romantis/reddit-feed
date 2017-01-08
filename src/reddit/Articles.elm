@@ -5,73 +5,22 @@ import Html.Attributes exposing (href, class)
 import Http 
 import Json.Decode as JD exposing (Decoder)
 import Json.Decode.Pipeline exposing (decode, required)
--- import Json.Encode as Encode
 import List
-import Dict exposing (Dict)
+import Dict 
+
+import Models exposing (RedditArticle, Articles)
+import Messages exposing (Msg(..))
 
 
 
 
 
 
-type alias RedditArticle =
-    { title: String 
-    , url: String
-    }
 
-    
-
-type alias Model =
-    { articles: Dict String (List RedditArticle)
-    , selected : String
-    }
-
-
-
-
-
-init : String -> Model
-init subRedditName =
-    Model Dict.empty subRedditName
-
-
-
-
-
-type Msg
-    = Select String
-    | FetchReddit (Result Http.Error (List RedditArticle))
-
-
-
-
-
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg ({articles, selected} as model) = 
-    case msg of 
-        FetchReddit (Err err) ->
-            let 
-                _ = Debug.log "FetchReddit error" err
-            in
-                model ! []
-        
-        FetchReddit (Ok reddit) ->
-            { model 
-                | articles = 
-                    Dict.insert selected reddit articles} ! []
-            
-        Select s -> 
-            { model | selected = s} ! []
-
-
-
-
-
-
-view : Model -> Html Msg
-view {articles, selected} =
+view : Articles -> String -> Html Msg
+view articles selected =
     if selected == "" then 
-        text "No reddits selected"
+        text "Select some reddit"
 
     else 
         case Dict.get selected articles of
@@ -106,11 +55,11 @@ fetch route =
         |> Http.send FetchReddit
 
 
-fetchIfNeeded : String -> Model -> Cmd Msg 
-fetchIfNeeded subRedditName model =
+fetchIfNeeded : String -> Articles -> Cmd Msg 
+fetchIfNeeded subRedditName articles =
     let 
         isThere =
-            Dict.member subRedditName model.articles
+            Dict.member subRedditName articles
     in
         if isThere then 
             Cmd.none 

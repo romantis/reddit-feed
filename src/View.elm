@@ -17,5 +17,5 @@ view : Model -> Html Msg
 view model =
   div [class "cf"] 
     [ Nav.view model
-    , Html.map ArticlesMsg <|Articles.view model.articles
+    , Articles.view model.articles model.selected
     ]
