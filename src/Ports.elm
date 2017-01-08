@@ -1,5 +1,5 @@
 port module Ports exposing (..)
 
-import Models exposing (Reddit)
+import Models exposing (SubReddit)
 
-port setStorage :  List Reddit -> Cmd msg
+port setStorage :  List SubReddit -> Cmd msg 

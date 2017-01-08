@@ -3,21 +3,23 @@ module Main exposing (main)
 import Html
 
 import Messages exposing (Msg(..))
-import Models exposing (Model, Reddit, initModel)
+import Models exposing (Model, SubReddit, initModel)
 import View exposing (view)
 import Update exposing (update)
 
 import Reddit.Articles exposing (fetch)
 
 
-init : Maybe (List Reddit) -> ( Model, Cmd Msg )
+init : Maybe (List SubReddit) -> ( Model, Cmd Msg )
 init mreddits  =
     let 
         subReddits =
             Maybe.withDefault [] mreddits
         
         initSubReddit =
-            Maybe.withDefault "" <| List.head subReddits
+            List.head subReddits
+                |> Maybe.map .displayName
+                |> Maybe.withDefault ""
         
         initCmd =
             if initSubReddit /= "" then
@@ -36,7 +38,7 @@ subscriptions _ =
     Sub.none 
         
 
-main : Program (Maybe (List Reddit)) Model Msg
+main : Program (Maybe (List SubReddit)) Model Msg
 main =
     Html.programWithFlags
         { init = init

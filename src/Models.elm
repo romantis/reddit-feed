@@ -4,8 +4,10 @@ import Reddit.Articles as Articles
 
 
 
-type alias Reddit 
-    = String
+type alias SubReddit = 
+    { title : String
+    , displayName : String
+    }
 
 type Menu
     = Edit
@@ -13,24 +15,27 @@ type Menu
     | Default
 
 type alias Model =
-    { selected : Reddit
-    , redditList : List Reddit
+    { selected : String
+    , subRedditList : List SubReddit
     , articles : Articles.Model
-    , newReddit: Reddit
+    , newReddit: String
     , iconMenu : Menu
     }
 
 
 
-initModel : List Reddit -> Model
-initModel reddits=
+initModel : List SubReddit -> Model
+initModel subReddits=
     let 
-        selected = 
-            Maybe.withDefault "" <| List.head reddits
+        selected =
+            List.head subReddits
+                |> Maybe.map .displayName
+                |> Maybe.withDefault ""
+            
     
     in
         { selected = selected
-        , redditList = reddits
+        , subRedditList = subReddits
         , articles = Articles.init selected
         , newReddit = ""
         , iconMenu = Default

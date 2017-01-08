@@ -1,10 +1,10 @@
 module Messages exposing (..)
 
 import Reddit.Articles as Articles
-import Models exposing (Menu, Reddit)
+import Models exposing (Menu, SubReddit)
 
 type Msg
-  = Select Reddit
+  = Select String
   | ArticlesMsg Articles.Msg
   | InputRedditName String
   | AddNewReddit

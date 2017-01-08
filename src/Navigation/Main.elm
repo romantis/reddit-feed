@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (classList, href, class, placeholder, type_, value)
 import Html.Events exposing (onInput, onClick)
 import Shared.Helpers exposing (hrefClick)
-import Models exposing (Reddit, Model, Menu(..))
+import Models exposing (SubReddit, Model, Menu(..))
 import Messages exposing (Msg(..))
 
 
@@ -19,29 +19,29 @@ view model =
         ] <| List.concat
         [ [iconMenuView model.iconMenu]
         , if model.iconMenu == Add then [addRedditView model.newReddit] else []
-        , List.map (navItem model.selected (model.iconMenu == Edit)) model.redditList
+        , List.map (navItem model.selected (model.iconMenu == Edit)) model.subRedditList
         ]
 
 
-navItem : Reddit -> Bool -> Reddit -> Html Msg
-navItem selected editing reddit  =
+navItem : String -> Bool -> SubReddit -> Html Msg
+navItem selected editing subReddit  =
     let
         deleteBtn =
             i 
-                [ class "fa fa-trash-o "
-                , onClick <| RemoveReddit reddit
+                [ class "fa fa-trash-o"
+                , onClick <| RemoveReddit subReddit.displayName
                 ] []
         
-        aAtrs =
-            [ classList ["active" => (reddit == selected) ]
-            , hrefClick Select reddit
-            , href <|  "/" ++ reddit
+        attrs =
+            [ classList ["active" => (subReddit.displayName == selected) ]
+            , hrefClick Select subReddit.displayName
+            , href <|  "/" ++ subReddit.displayName
             ] 
     in
         div [ class "cf navigation-item"]
             [ a
-                (if not editing then aAtrs else [ href "#"])
-                [ text reddit ]
+                (if not editing then attrs else [ href "#"])
+                [ text subReddit.title ]
             , if editing then deleteBtn else text ""
             ]
 

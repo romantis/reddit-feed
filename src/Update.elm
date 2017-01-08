@@ -1,7 +1,7 @@
 module Update exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model, Menu(..))
+import Models exposing (Model, SubReddit, Menu(..))
 
 import Messages exposing (Msg(..))
 import Reddit.Articles as Articles
@@ -59,13 +59,13 @@ update msg model =
                 updModel =
                     if isValid then
                         {model 
-                            | redditList = model.redditList ++ [reddit]
+                            | subRedditList = model.subRedditList ++ [SubReddit reddit reddit]
                             , newReddit = "" }
                     else
                         model
             in
                 updModel ! 
-                    [setStorage updModel.redditList]
+                    [setStorage updModel.subRedditList]
         
 
         SelectMenu menu ->
@@ -78,12 +78,12 @@ update msg model =
             
         RemoveReddit reddit ->
             let 
-                redditList = 
-                    List.filter ((/=) reddit) model.redditList
+                subRedditList = 
+                    List.filter ((/=) reddit << .displayName) model.subRedditList
                 updCmd =
-                    if redditList /= model.redditList then
-                        setStorage redditList
+                    if subRedditList /= model.subRedditList then
+                        setStorage subRedditList
                     else 
                         Cmd.none
             in
-                { model | redditList = redditList } ! [updCmd]
+                { model | subRedditList = subRedditList } ! [updCmd] 
