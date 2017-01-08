@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/romantis/reddit-feed.git"
   },
   "author": "romantis",
   "license": "MIT"
