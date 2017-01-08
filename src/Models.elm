@@ -1,10 +1,11 @@
 module Models exposing (..)
 
-import Reddit.Main as Reddit
+import Reddit.Articles as Articles
 
 
 
-type alias Reddit = String
+type alias Reddit 
+    = String
 
 type Menu
     = Edit
@@ -14,7 +15,7 @@ type Menu
 type alias Model =
     { selected : Reddit
     , redditList : List Reddit
-    , reddit : Reddit.Model
+    , articles : Articles.Model
     , newReddit: Reddit
     , iconMenu : Menu
     }
@@ -23,9 +24,14 @@ type alias Model =
 
 initModel : List Reddit -> Model
 initModel reddits=
-    { selected = ""
-    , redditList = reddits
-    , reddit = Reddit.init ""
-    , newReddit = ""
-    , iconMenu = Default
-    }
+    let 
+        selected = 
+            Maybe.withDefault "" <| List.head reddits
+    
+    in
+        { selected = selected
+        , redditList = reddits
+        , articles = Articles.init selected
+        , newReddit = ""
+        , iconMenu = Default
+        }

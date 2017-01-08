@@ -4,7 +4,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model, Menu(..))
 
 import Messages exposing (Msg(..))
-import Reddit.Main as Reddit
+import Reddit.Articles as Articles
 import Ports exposing (setStorage)
 
 import Navigation  exposing (modifyUrl)
@@ -12,13 +12,13 @@ import Navigation  exposing (modifyUrl)
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
-        RedditMsg subMsg ->
+        ArticlesMsg subMsg ->
             let 
                 (subModel, subCmd) =
-                    Reddit.update subMsg model.reddit
+                    Articles.update subMsg model.articles
             in
-                ( { model | reddit = subModel }
-                , Cmd.map RedditMsg subCmd
+                ( { model | articles = subModel }
+                , Cmd.map ArticlesMsg subCmd
                 )
         
         Select selected ->
@@ -27,14 +27,14 @@ update msg model =
                     if selected == model.selected then 
                         Cmd.none 
                     else 
-                        Cmd.map RedditMsg 
-                            (Reddit.fetchIfNeeded selected model.reddit)
-                reddit =
-                    model.reddit
+                        Cmd.map ArticlesMsg 
+                            (Articles.fetchIfNeeded selected model.articles)
+                articles =
+                    model.articles
             in
                 { model 
                     | selected = selected
-                    , reddit = {reddit | selected = selected}  
+                    , articles = {articles | selected = selected}  
                  } !
                     [ redditCmd
                     , modifyUrl ("#" ++ selected)

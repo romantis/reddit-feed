@@ -1,4 +1,4 @@
-module Reddit.Main exposing (..)
+module Reddit.Articles exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (href, class)
@@ -14,16 +14,15 @@ import Dict exposing (Dict)
 
 
 
-type alias RedditItem =
+type alias RedditArticle =
     { title: String 
     , url: String
     }
 
-type alias Reddit = 
-    List RedditItem
+    
 
 type alias Model =
-    { reddits: Dict String Reddit
+    { articles: Dict String (List RedditArticle)
     , selected : String
     }
 
@@ -32,8 +31,8 @@ type alias Model =
 
 
 init : String -> Model
-init topic =
-    Model Dict.empty topic
+init subRedditName =
+    Model Dict.empty subRedditName
 
 
 
@@ -41,14 +40,14 @@ init topic =
 
 type Msg
     = Select String
-    | FetchReddit (Result Http.Error Reddit)
+    | FetchReddit (Result Http.Error (List RedditArticle))
 
 
 
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg ({reddits, selected} as model) = 
+update msg ({articles, selected} as model) = 
     case msg of 
         FetchReddit (Err err) ->
             let 
@@ -58,8 +57,8 @@ update msg ({reddits, selected} as model) =
         
         FetchReddit (Ok reddit) ->
             { model 
-                | reddits = 
-                    Dict.insert selected reddit reddits} ! []
+                | articles = 
+                    Dict.insert selected reddit articles} ! []
             
         Select s -> 
             { model | selected = s} ! []
@@ -70,12 +69,12 @@ update msg ({reddits, selected} as model) =
 
 
 view : Model -> Html Msg
-view {reddits, selected} =
+view {articles, selected} =
     if selected == "" then 
         text "No reddits selected"
 
     else 
-        case Dict.get selected reddits of
+        case Dict.get selected articles of
             Nothing ->
                 div [] [text ("Loading " ++ selected ++ " reddit...")]
             Just rx ->
@@ -84,13 +83,13 @@ view {reddits, selected} =
                         [ text "Reddit: " 
                         , span [ class "reddit-selected"] [ text selected ] 
                         ]
-                    , ol [] (List.map redditItemView rx) 
+                    , ol [] (List.map redditArticleView rx) 
                     ]
     
 
 
-redditItemView : RedditItem -> Html Msg
-redditItemView r =
+redditArticleView : RedditArticle -> Html Msg
+redditArticleView r =
     li [] 
         [ a 
             [ href r.url ]
@@ -108,15 +107,15 @@ fetch route =
 
 
 fetchIfNeeded : String -> Model -> Cmd Msg 
-fetchIfNeeded nextTopic model =
+fetchIfNeeded subRedditName model =
     let 
         isThere =
-            Dict.member nextTopic model.reddits
+            Dict.member subRedditName model.articles
     in
         if isThere then 
             Cmd.none 
         else 
-            fetch nextTopic
+            fetch subRedditName
 
 
 redditUrl : String -> String
@@ -124,17 +123,17 @@ redditUrl route =
     "https://www.reddit.com/r/" ++ route ++".json"
 
 
-decoder : Decoder (List RedditItem)
+decoder : Decoder (List RedditArticle)
 decoder =
     JD.at 
         ["data", "children"] 
         (JD.list decodeReddit)
 
 
-decodeReddit : Decoder RedditItem
+decodeReddit : Decoder RedditArticle
 decodeReddit =
     JD.field "data"
-        ( decode RedditItem
+        ( decode RedditArticle
             |> required "title" JD.string
             |> required "url" JD.string
         )
