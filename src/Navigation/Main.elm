@@ -3,13 +3,10 @@ module Navigation.Main exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (classList, href, class, placeholder, type_, value)
 import Html.Events exposing (onInput, onClick)
-import Shared.Helpers exposing (hrefClick)
+import Shared.Helpers exposing (hrefClick, onEnter, (=>)) 
 import Models exposing (SubReddit, Model, Menu(..))
 import Messages exposing (Msg(..))
 
-
-(=>) : a -> b -> ( a, b )
-(=>) = (,)
 
 
 view : Model -> Html Msg
@@ -76,6 +73,7 @@ addRedditView newReddit =
             , placeholder "Reddit name"
             , value newReddit
             , onInput InputRedditName
+            , onEnter AddNewReddit
             ] []
         , button 
             [ class "add-btn"
