@@ -26,7 +26,7 @@ view articles selected =
     else 
         case Dict.get selected articles of
             Nothing ->
-                [ i [class "fa fa-spinner fa-pulse fa-3x fa-fw"] []
+                [ i [ class "fa fa-spinner fa-pulse fa-3x fa-fw fixed-center"] []
                 ]
             Just rx ->
                     [ h2 [] 
