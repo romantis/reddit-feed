@@ -19,22 +19,23 @@ import Messages exposing (Msg(..))
 
 view : Articles -> String -> Html Msg
 view articles selected =
+    div [ class "content" ] <| 
     if selected == "" then 
-        text "Select some reddit"
+        [ text "Add some subreddit" ]
 
     else 
         case Dict.get selected articles of
             Nothing ->
-                div [] [text ("Loading " ++ selected ++ " reddit...")]
+                [ i [class "fa fa-spinner fa-pulse fa-3x fa-fw"] []
+                ]
             Just rx ->
-                div [ class "content" ] 
                     [ h2 [] 
                         [ text "Reddit: " 
                         , span [ class "reddit-selected"] [ text selected ] 
                         ]
                     , ol [] (List.map redditArticleView rx) 
                     ]
-    
+        
 
 
 redditArticleView : RedditArticle -> Html Msg
