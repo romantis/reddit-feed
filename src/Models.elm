@@ -40,11 +40,16 @@ initModel subReddits=
                 |> Maybe.map .displayName
                 |> Maybe.withDefault ""
             
-    
+        iconMenu =
+            if List.isEmpty subReddits then
+                Add
+            else 
+                Default
+        
     in
         { selected = selected
         , subRedditList = subReddits
         , articles = Dict.empty
         , newReddit = ""
-        , iconMenu = Default
+        , iconMenu = iconMenu
         }
