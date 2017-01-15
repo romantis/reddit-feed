@@ -1,7 +1,7 @@
 module Navigation.Main exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (classList, href, class, placeholder, type_, value)
+import Html.Attributes exposing (classList, href, class, placeholder, type_, value, tabindex, autofocus)
 import Html.Events exposing (onInput, onClick)
 import Shared.Helpers exposing (hrefClick, onEnter, (=>)) 
 import Models exposing (SubReddit, Model, Menu(..))
@@ -69,6 +69,8 @@ addRedditView newReddit =
     div [ class "add-panel" ] 
         [ input 
             [ type_ "text"
+            , tabindex 0
+            , autofocus True
             , class "input-reddit"
             , placeholder "Subreddit"
             , value newReddit
