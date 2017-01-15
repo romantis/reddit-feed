@@ -151,6 +151,16 @@ small, .font_small {font-size: 0.833rem;}
 }
 
 
+
+.fixed-center {
+    position: fixed;
+    top: 45%;
+    left: 45%;
+}
+
+
+
+
 /*
 =========== Add Reddit panel
 */
