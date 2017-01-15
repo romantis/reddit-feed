@@ -70,7 +70,7 @@ addRedditView newReddit =
         [ input 
             [ type_ "text"
             , class "input-reddit"
-            , placeholder "Reddit name"
+            , placeholder "Subreddit"
             , value newReddit
             , onInput InputRedditName
             , onEnter AddNewReddit
