@@ -38,6 +38,13 @@ small, .font_small {font-size: 0.833rem;}
 
 
 
+@media screen and (min-width: 768px) {
+    .main {
+        display: flex;
+    }
+}
+
+
 /*
 =========== Min content ===========
 */
@@ -46,7 +53,6 @@ small, .font_small {font-size: 0.833rem;}
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    float: right;
     padding-left: 10%;
     padding-right: 10%;
 }
@@ -59,7 +65,9 @@ small, .font_small {font-size: 0.833rem;}
 
 @media screen and (min-width: 768px) {
     .content {
-        width: calc(100vw - 12rem - 20px - 1px);
+        flex-grow: 1;
+        flex-basis: auto;
+        flex-basis: calc(100% - 15rem);
     }
 }
 
@@ -69,16 +77,23 @@ small, .font_small {font-size: 0.833rem;}
 */
 
 .navigation {
-    background-color: white;
+    display: flex;
+    flex-direction: column;
 }   
 
 .navigation-item {
-    padding-right: 1rem;
-    padding-left: 1rem;
+    display: flex;
+    align-items: baseline;
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+
+.navigation-item:hover {
+    background-color: #eee;
 }
 
 .navigation-item  a {
-    display: table-cell;
+    flex: 10;
     width: 100%;
     font-size: 1.2rem;;
     color: #555;
@@ -87,7 +102,7 @@ small, .font_small {font-size: 0.833rem;}
 }
 
 .navigation-item > i {
-    display: table-cell;
+    flex:1;
     color: silver;
 }
 
@@ -108,7 +123,7 @@ small, .font_small {font-size: 0.833rem;}
 
 .icon-navigation {
     text-align: right;
-}
+ }
 
 .icon-navigation i {
     padding: .5rem;
@@ -123,8 +138,9 @@ small, .font_small {font-size: 0.833rem;}
 
 @media screen and (min-width: 768px) {
     .navigation {
-        width: 12rem;
-        float: left;
+        flex-grow:1;
+        flex-shrink: 0;
+        flex-basis: 15rem;
         padding-bottom: 2000em;
         margin-bottom: -2000em;
         overflow: hidden;
@@ -132,6 +148,38 @@ small, .font_small {font-size: 0.833rem;}
     }
     
 }
+
+
+
+/*
+=========== Add Reddit panel
+*/
+
+.add-panel {
+    padding: .5rem;
+    text-align: center;
+}
+
+.input-reddit {
+    padding-left: .5rem;
+    width: 73.4%;
+}
+
+.add-btn {
+    background-color: cornflowerblue;
+    border-color: dodgerblue;
+    width: 3rem;
+    color: white;
+}
+
+.add-btn:hover,
+.add-btn:active {
+    background-color: dodgerblue;
+    border-color: cornflowerblue;
+}
+
+
+
 
 
 
@@ -156,38 +204,4 @@ small, .font_small {font-size: 0.833rem;}
     position: fixed;
     top: 45%;
     left: 45%;
-}
-
-
-
-
-/*
-=========== Add Reddit panel
-*/
-
-.add-panel {
-    padding: .5rem;
-}
-
-.input-reddit {
-    padding-left: .5rem;
-}
-
-.add-btn {
-    background-color: cornflowerblue;
-    border-color: dodgerblue;
-    width: 3rem;
-    color: white;
-}
-
-.add-btn:hover,
-.add-btn:active {
-    background-color: dodgerblue;
-    border-color: cornflowerblue;
-}
-
-@media screen and (min-width: 768px) {
-    .input-reddit {
-        width: 7.2rem;
-    }
 }
