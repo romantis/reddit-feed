@@ -9,13 +9,17 @@ type alias SubReddit =
     , displayName : String
     }
 
-type alias RedditArticle =
-    { title: String 
-    , url: String
+type alias Post =
+    { title : String 
+    , url : String
+    , author : String
+    , score : Int
+    , created : Float
+    , numComments : Int
     }
 
-type alias Articles =
-    Dict String (List RedditArticle)
+type alias Posts =
+    Dict String (List Post)
 
 type Menu
     = Edit
@@ -25,7 +29,7 @@ type Menu
 type alias Model =
     { selected : String
     , subRedditList : List SubReddit
-    , articles : Articles
+    , posts : Posts
     , newReddit: String
     , iconMenu : Menu
     }
@@ -49,7 +53,7 @@ initModel subReddits=
     in
         { selected = selected
         , subRedditList = subReddits
-        , articles = Dict.empty
+        , posts = Dict.empty
         , newReddit = ""
         , iconMenu = iconMenu
         }
