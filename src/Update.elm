@@ -4,7 +4,7 @@ import Messages exposing (Msg(..))
 import Models exposing (Model, SubReddit, Menu(..))
 import Messages exposing (Msg(..))
 import Ports exposing (setStorage)
-import Reddit.Articles exposing (fetchIfNeeded)
+import Reddit.Posts exposing (fetchIfNeeded)
 
 import Navigation  exposing (modifyUrl)
 import Dict
@@ -18,9 +18,9 @@ update msg model =
                     if selected == model.selected then 
                         Cmd.none 
                     else 
-                        fetchIfNeeded selected model.articles
-                articles =
-                    model.articles
+                        fetchIfNeeded selected model.posts
+                posts =
+                    model.posts
             in
                 { model 
                     | selected = selected } !
@@ -84,5 +84,5 @@ update msg model =
         
         FetchReddit (Ok reddit) ->
             { model 
-                | articles = 
-                    Dict.insert model.selected reddit model.articles} ! []
+                | posts = 
+                    Dict.insert model.selected reddit model.posts} ! []

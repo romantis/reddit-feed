@@ -1,7 +1,7 @@
 module Messages exposing (..)
 
 import Http 
-import Models exposing (Menu, SubReddit, RedditArticle)
+import Models exposing (Menu, SubReddit, Post)
 
 type Msg
   = Select String
@@ -9,4 +9,4 @@ type Msg
   | AddNewReddit
   | SelectMenu Menu
   | RemoveReddit String
-  | FetchReddit (Result Http.Error (List RedditArticle))
+  | FetchReddit (Result Http.Error (List Post))
