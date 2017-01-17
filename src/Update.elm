@@ -41,13 +41,17 @@ update msg model =
                         |> String.toLower
                         
                 isValid =
-                    not <| String.isEmpty reddit
+                    (not <| String.isEmpty reddit)
+                    && (not <| List.member reddit (List.map .displayName model.subRedditList))
                         
                 
                 updModel =
                     if isValid then
                         {model 
-                            | subRedditList = model.subRedditList ++ [SubReddit reddit reddit]
+                            | subRedditList = 
+                                [SubReddit reddit reddit]
+                                    |> List.append model.subRedditList
+                                    |> List.sortBy .title
                             , newReddit = "" }
                     else
                         model
