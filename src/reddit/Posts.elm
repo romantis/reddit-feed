@@ -1,12 +1,14 @@
 module Reddit.Posts exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (href, class)
+import Html.Attributes exposing (href, class, src)
 import Http 
 import Json.Decode as JD exposing (Decoder)
 import Json.Decode.Pipeline exposing (decode, required)
 import List
 import Dict 
+import Date
+import Date.Format exposing (format)
 
 import Models exposing (Post, Posts)
 import Messages exposing (Msg(..))
@@ -41,10 +43,24 @@ view posts selected =
 redditPostView : Post -> Html Msg
 redditPostView r =
     li [ class "post"] 
-        [ a 
+        [ span [] [ text <| toString r.score]
+        , a 
             [ href r.url ]
-            [ text r.title]
-        ] 
+            [ img [src r.thumbnail ] []
+            , h3 [] [text r.title]
+            ]
+        , p []
+            [ text "by "
+            , a [ href <| "https://www.reddit.com/user/" ++ r.author] [text r.author]
+            ]
+        , p [] 
+            [ text <| format "%B %d, %Y at %I:%M%P " (Date.fromTime r.created)
+            ]
+        , p []
+            [ text "Comments: "
+            , text <| toString r.numComments
+            ]
+        ]
 
 
 {-------- Commends and Decoders ---------------------------------------------------------- -}
@@ -90,4 +106,5 @@ decodeReddit =
             |> required "score" JD.int
             |> required "created" JD.float
             |> required "num_comments" JD.int
-        )
+            |> required "thumbnail" JD.string
+        ) 
