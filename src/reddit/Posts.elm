@@ -35,7 +35,7 @@ view posts selected =
                         [ text "Subreddit: " 
                         , span [ class "reddit-selected"] [ text selected ] 
                         ]
-                    , ol [] (List.map redditPostView rx) 
+                    , ul [ class "post-list"] (List.map redditPostView rx) 
                     ]
         
 
@@ -43,24 +43,51 @@ view posts selected =
 redditPostView : Post -> Html Msg
 redditPostView r =
     li [ class "post"] 
-        [ span [] [ text <| toString r.score]
+        [ div [ class "post-meta"] 
+            [ span [ class "post-author"]
+                [ text "by "
+                , a [ href <| "https://www.reddit.com/user/" ++ r.author] [text r.author]
+                ]
+            , span [ class "post-created"] 
+                [ text <| format "%B %d, %Y at %I:%M%P " (Date.fromTime r.created)
+                ]
+            ]
+        , scoreView r.score
         , a 
-            [ href r.url ]
-            [ img [src r.thumbnail ] []
-            , h3 [] [text r.title]
+            [ href r.url
+            , class "post-url"
             ]
-        , p []
-            [ text "by "
-            , a [ href <| "https://www.reddit.com/user/" ++ r.author] [text r.author]
+            [ thumbnailView r.thumbnail
+            , h3 [ class "post-title"] [text r.title]
             ]
-        , p [] 
-            [ text <| format "%B %d, %Y at %I:%M%P " (Date.fromTime r.created)
-            ]
-        , p []
+        , div [ class "past-numcomments"]
             [ text "Comments: "
             , text <| toString r.numComments
             ]
         ]
+
+
+thumbnailView : String -> Html Msg
+thumbnailView thumbnail =
+    if thumbnail /= "self" then 
+        img 
+            [ src thumbnail
+            , class "post-thumbnail"
+            ] []
+    else 
+        text ""
+
+scoreView : Int -> Html Msg
+scoreView score =
+    let
+        stringScore =
+            if score < 1000 then
+                toString score
+            else
+                toString (score // 1000) ++ "." ++ (String.left 1 << toString << (%) score) 1000 ++ "k"
+            
+    in
+        span [ class "post-score"] [ text stringScore ]
 
 
 {-------- Commends and Decoders ---------------------------------------------------------- -}

@@ -15,7 +15,7 @@ import Navigation.Main as Nav
 
 view : Model -> Html Msg
 view model =
-  div [class "main cf"] 
+  div [class "main cf tm-light"] 
     [ Nav.view model
     , Posts.view model.posts model.selected
     ]

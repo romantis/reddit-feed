@@ -1,14 +1,16 @@
 /*
 =========== Basic styles ===========
 */
-html {font-size: 18px;}
+html { 
+    font-size: 18px;
+    font-family: -apple-system, BlinkMacSystemFont, 
+        "Segoe UI", "Roboto", "Oxygen", 
+        "Ubuntu", "Cantarell", "Fira Sans", 
+        "Droid Sans", "Helvetica Neue", sans-serif;
+}
 
 body {
   background-color: white;
-  font-family: -apple-system, BlinkMacSystemFont, 
-    "Segoe UI", "Roboto", "Oxygen", 
-    "Ubuntu", "Cantarell", "Fira Sans", 
-    "Droid Sans", "Helvetica Neue", sans-serif;
   font-weight: 400;
   line-height: 1.45;
   color: #333;
@@ -17,7 +19,6 @@ body {
 p {margin-bottom: 1.3em;}
 
 h1, h2, h3, h4 {
-  font-family: "Roboto Slab", Georgia, serif;
   margin: 1.414rem 0 0.5rem;
   font-weight: inherit;
   line-height: 1.2;
@@ -36,7 +37,9 @@ h4 {font-size: 1.2rem;}
 
 small, .font_small {font-size: 0.833rem;}
 
-
+img, picture {
+    max-width: 100%;
+}
 
 @media screen and (min-width: 768px) {
     .main {
@@ -53,8 +56,12 @@ small, .font_small {font-size: 0.833rem;}
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.tm-light .content {
+    background-color: #eee;
 }
 
 .reddit-selected {
@@ -68,6 +75,8 @@ small, .font_small {font-size: 0.833rem;}
         flex-grow: 1;
         flex-basis: auto;
         flex-basis: calc(100% - 15rem);
+        padding-left: 10%;
+        padding-right: 10%;
     }
 }
 
@@ -143,7 +152,7 @@ small, .font_small {font-size: 0.833rem;}
         flex-basis: 15rem;
         padding-bottom: 2000em;
         margin-bottom: -2000em;
-        overflow: hidden;
+        overflow: auto;
         border-right: 1px solid #999;
     }
     
@@ -180,6 +189,85 @@ small, .font_small {font-size: 0.833rem;}
 
 
 
+/*
+Post styles
+*/
+
+.post-list {
+    list-style: none;
+}
+
+.post {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #fff;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.post-score {
+    display: block;
+    width: 4rem;
+    flex-basis: auto;
+    text-align: center;
+    font-size: 1.5rem;
+    position: absolute;
+    margin-left:-5.4rem; 
+    margin-left: calc(1vh - 5.6rem)
+}
+
+.post-url {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: auto;
+    align-items: center;
+    text-decoration: none;
+}
+
+.post-thumbnail {
+    flex-basis: 147px;
+}
+
+.post-title {
+    font-size: calc(1.2rem + .5vw);
+    color: midnightblue;
+    margin-top: .4rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post-title:hover {
+    color: cornflowerblue;
+}
+
+
+.post-meta {
+    display: flex;
+    flex-grow:1;
+    flex-basis:100%;
+    padding-bottom: .2rem;
+    border-bottom: 1px solid lightskyblue;
+}
+.post-author a {
+    text-decoration: none;
+    color: midnightblue;
+    font-weight: bolder;
+}
+
+.post-author a:hover {
+    text-decoration: underline;
+}
+
+.post-created {
+    margin-left: auto;
+}
+.past-numcomments {
+    flex-basis:100%;
+    text-align: right;
+}
 
 
 
