@@ -208,7 +208,9 @@ Post styles
 }
 
 .post-score {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
     width: 4rem;
     flex-basis: auto;
     text-align: center;

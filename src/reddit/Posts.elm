@@ -89,7 +89,11 @@ scoreView score =
                 toString (score // 1000) ++ "." ++ (String.left 1 << toString << (%) score) 1000 ++ "k"
             
     in
-        span [ class "post-score"] [ text stringScore ]
+        div [ class "post-score"]
+            [ i [ class "fa fa-arrow-up"] []
+            , span [] [ text stringScore ]
+            , i [ class "fa fa-arrow-down"] []
+            ]
 
 
 {-------- Commends and Decoders ---------------------------------------------------------- -}
