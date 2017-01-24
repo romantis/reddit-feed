@@ -49,7 +49,7 @@ redditPostView r =
                 , a [ href <| "https://www.reddit.com/user/" ++ r.author] [text r.author]
                 ]
             , span [ class "post-created"] 
-                [ text <| format "%B %d, %Y at %I:%M%P " (Date.fromTime r.created)
+                [ text <| format "%B %d, %Y at %I:%M%P " r.created
                 ]
             ]
         , scoreView r.score
@@ -131,7 +131,14 @@ decodeReddit =
             |> required "url" JD.string
             |> required "author" JD.string
             |> required "score" JD.int
-            |> required "created" JD.float
+            |> required "created" decodeDate
             |> required "num_comments" JD.int
             |> required "thumbnail" JD.string
         ) 
+
+
+decodeDate : Decoder Date.Date
+decodeDate =
+    JD.float
+        |> JD.map (\t -> t*1000) -- Reddit uses Unix Timestamps
+        |> JD.map Date.fromTime

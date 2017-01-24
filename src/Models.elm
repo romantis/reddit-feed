@@ -1,7 +1,8 @@
 module Models exposing (..)
 
 import Dict exposing (Dict)
-import Time exposing (Time)
+-- import Time exposing (Time)
+import Date exposing (Date)
 
 
 
@@ -15,7 +16,7 @@ type alias Post =
     , url : String
     , author : String
     , score : Int
-    , created : Time
+    , created : Date
     , numComments : Int
     , thumbnail : String
     }
