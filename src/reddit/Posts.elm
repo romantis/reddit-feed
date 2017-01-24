@@ -47,7 +47,11 @@ redditPostView now r =
                 , a [ href <| "https://www.reddit.com/user/" ++ r.author] [text r.author]
                 ]
             , span [ class "post-created"] 
-                [ text <| Distance.inWords r.created now
+                [ text "submitted"
+                , text " "
+                , text <| Distance.inWords r.created now
+                , text " "
+                , text "ago"
                 ]
             ]
         , scoreView r.score
