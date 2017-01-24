@@ -7,10 +7,10 @@ import Json.Decode as JD exposing (Decoder)
 import Json.Decode.Pipeline exposing (decode, required)
 import List
 import Dict 
-import Date
-import Date.Format exposing (format)
+import Date exposing (Date)
+import Date.Distance as Distance
 
-import Models exposing (Post, Posts)
+import Models exposing (Post, Posts, Model)
 import Messages exposing (Msg(..))
 
 
@@ -19,12 +19,11 @@ import Messages exposing (Msg(..))
 
 
 
-view : Posts -> String -> Html Msg
-view posts selected =
+view : Model -> Html Msg
+view {posts, selected, now} =
     div [ class "content" ] <| 
     if selected == "" then 
         [ text "Add subreddits" ]
-
     else 
         case Dict.get selected posts of
             Nothing ->
@@ -35,13 +34,12 @@ view posts selected =
                         [ text "Subreddit: " 
                         , span [ class "reddit-selected"] [ text selected ] 
                         ]
-                    , ul [ class "post-list"] (List.map redditPostView rx) 
+                    , ul [ class "post-list"] (List.map (redditPostView now) rx) 
                     ]
-        
 
 
-redditPostView : Post -> Html Msg
-redditPostView r =
+redditPostView : Date -> Post -> Html Msg
+redditPostView now r =
     li [ class "post"] 
         [ div [ class "post-meta"] 
             [ span [ class "post-author"]
@@ -49,7 +47,7 @@ redditPostView r =
                 , a [ href <| "https://www.reddit.com/user/" ++ r.author] [text r.author]
                 ]
             , span [ class "post-created"] 
-                [ text <| format "%B %d, %Y at %I:%M%P " r.created
+                [ text <| Distance.inWords r.created now
                 ]
             ]
         , scoreView r.score

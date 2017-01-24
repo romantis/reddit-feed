@@ -8,6 +8,7 @@ import Reddit.Posts exposing (fetchIfNeeded)
 
 import Navigation  exposing (modifyUrl)
 import Dict
+import Date
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -90,3 +91,6 @@ update msg model =
             { model 
                 | posts = 
                     Dict.insert model.selected reddit model.posts} ! []
+        
+        NewTime time ->
+            {model | now = Date.fromTime time} ! []

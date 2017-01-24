@@ -1,7 +1,6 @@
 module Models exposing (..)
 
 import Dict exposing (Dict)
--- import Time exposing (Time)
 import Date exposing (Date)
 
 
@@ -35,6 +34,7 @@ type alias Model =
     , posts : Posts
     , newReddit: String
     , iconMenu : Menu
+    , now : Date
     }
 
 
@@ -59,4 +59,5 @@ initModel subReddits=
         , posts = Dict.empty
         , newReddit = ""
         , iconMenu = iconMenu
+        , now = Date.fromTime (toFloat 0)
         }

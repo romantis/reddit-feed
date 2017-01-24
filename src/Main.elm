@@ -1,6 +1,8 @@
 module Main exposing (main)
 
 import Html
+import Time exposing (minute)
+import Task
 
 import Messages exposing (Msg(..))
 import Models exposing (Model, SubReddit, initModel)
@@ -28,14 +30,19 @@ init mreddits  =
                 Cmd.none
 
     in
-        ( initModel subReddits
-        , initCmd
-        ) 
+        (initModel subReddits) !  [initCmd, nowTime]
 
+
+
+nowTime : Cmd Msg
+nowTime =
+    Task.perform NewTime Time.now
 
 subscriptions : Model -> Sub Msg 
 subscriptions _ =
-    Sub.none 
+    Time.every minute NewTime
+    
+        
         
 
 main : Program (Maybe (List SubReddit)) Model Msg
