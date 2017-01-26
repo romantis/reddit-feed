@@ -130,11 +130,9 @@ img, picture {
     color: #555;
 }
 
-.icon-navigation {
-    text-align: right;
- }
+.icon-navigation {}
 
-.icon-navigation i {
+.icon-navigation > i {
     padding: .5rem;
     color: silver;
 }
@@ -274,24 +272,23 @@ Post styles
 
 
 /* 
-=========== Helper classes ===========
+=========== Utility classes ===========
 */
 
 .cf::before, .cf::after {
     content:"";
     display:table;
 }
-.cf::after {
-    clear:both;
-}
-.cf {
-    zoom:1;
-}
+.cf::after { clear:both; }
+.cf { zoom:1; }
 
 
+.fx { display: flex; }
 
-.fixed-center {
-    position: fixed;
-    top: 45%;
-    left: 45%;
-}
+.fx-col { flex-direction: column; }
+
+.ml-auto { margin-left: auto; }
+
+.alco-center { align-content: center; }
+
+.alit-baseline { align-items: baseline; }
