@@ -56,10 +56,15 @@ img, picture {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding-left: 4%;
+    padding-top: 4%;
     padding-right: 4%;
+    padding-bottom: 4%;
+    padding-left: 4%;
 }
 
+.content + * {
+    margin-top: 0;
+}
 
 .reddit-selected {
     font-weight: bold;
@@ -126,10 +131,6 @@ img, picture {
 }
 
 
-.navigation-item:hover > .btn-delete {
-    display: initial;
-}
-
 .navigation-item a:hover,
 .navigation-item a:active,
 .navigation-item a.active {
@@ -137,9 +138,7 @@ img, picture {
 }
 
 
-.navbar {
-    margin-bottom: .5rem;
-}
+.navbar {}
 
 .btn-bars {}
 
@@ -150,6 +149,7 @@ img, picture {
 
 .menu-list {
     display: none;
+    padding-top: .5rem;
     color: silver;
 }
 .menu-list.active {
