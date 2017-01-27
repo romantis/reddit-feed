@@ -12,6 +12,8 @@ import Date.Distance as Distance
 
 import Models exposing (Post, Posts, Model)
 import Messages exposing (Msg(..))
+import Shared.Spinner exposing (fadingCircleView) 
+
 
 
 
@@ -27,7 +29,7 @@ view {posts, selected, now} =
     else 
         case Dict.get selected posts of
             Nothing ->
-                [ i [ class "fa fa-spinner fa-pulse fa-3x fa-fw fixed-center"] []
+                [ fadingCircleView
                 ]
             Just rx ->
                     [ h2 [] 
@@ -71,13 +73,15 @@ redditPostView now r =
 
 thumbnailView : String -> Html Msg
 thumbnailView thumbnail =
-    if thumbnail /= "self" then 
-        img 
-            [ src thumbnail
-            , class "post-thumbnail"
-            ] []
-    else 
-        text ""
+    case thumbnail of 
+        "self" -> text ""
+        "default" -> text ""
+        _ ->
+            img 
+                [ src thumbnail
+                , class "post-thumbnail"
+                ] []
+
 
 scoreView : Int -> Html Msg
 scoreView score =
