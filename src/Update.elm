@@ -24,7 +24,8 @@ update msg model =
                     model.posts
             in
                 { model 
-                    | selected = selected } !
+                    | selected = selected
+                    , menuToggle = False } !
                     [ redditCmd
                     , modifyUrl ("#" ++ selected)
                     ]
