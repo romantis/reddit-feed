@@ -15,7 +15,7 @@ import Navigation.Main as Nav
 
 view : Model -> Html Msg
 view model =
-  div [class "main cf tm-light"] 
+  div [ class "wrapper"] 
     [ Nav.view model
     , Posts.view model
     ]

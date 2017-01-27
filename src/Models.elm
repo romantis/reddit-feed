@@ -23,17 +23,13 @@ type alias Post =
 type alias Posts =
     Dict String (List Post)
 
-type Menu
-    = Edit
-    | Add
-    | Default
 
 type alias Model =
     { selected : String
     , subRedditList : List SubReddit
     , posts : Posts
     , newReddit: String
-    , iconMenu : Menu
+    , menuToggle : Bool
     , now : Date
     }
 
@@ -46,18 +42,12 @@ initModel subReddits=
             List.head subReddits
                 |> Maybe.map .displayName
                 |> Maybe.withDefault ""
-            
-        iconMenu =
-            if List.isEmpty subReddits then
-                Add
-            else 
-                Default
         
     in
         { selected = selected
         , subRedditList = subReddits
         , posts = Dict.empty
         , newReddit = ""
-        , iconMenu = iconMenu
+        , menuToggle = False
         , now = Date.fromTime (toFloat 0)
         }

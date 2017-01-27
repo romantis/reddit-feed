@@ -21,7 +21,7 @@ import Messages exposing (Msg(..))
 
 view : Model -> Html Msg
 view {posts, selected, now} =
-    div [ class "content" ] <| 
+    main_ [ class "content bg-eee" ] <| 
     if selected == "" then 
         [ text "Add subreddits" ]
     else 

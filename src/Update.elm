@@ -1,7 +1,7 @@
 module Update exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model, SubReddit, Menu(..))
+import Models exposing (Model, SubReddit)
 import Messages exposing (Msg(..))
 import Ports exposing (setStorage)
 import Reddit.Posts exposing (fetchIfNeeded)
@@ -61,14 +61,6 @@ update msg model =
                     [setStorage updModel.subRedditList]
         
 
-        SelectMenu menu ->
-            if menu /= model.iconMenu then
-                {model | iconMenu = menu} ! []
-            else 
-                {model | iconMenu = Default } ! []
-
-
-            
         RemoveReddit reddit ->
             let 
                 subRedditList = 
@@ -94,3 +86,6 @@ update msg model =
         
         NewTime time ->
             {model | now = Date.fromTime time} ! []
+        
+        ToggleMenu ->
+            {model | menuToggle = not model.menuToggle} ! []
