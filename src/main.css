@@ -42,7 +42,7 @@ img, picture {
 }
 
 @media screen and (min-width: 768px) {
-    .main {
+    .wrapper {
         display: flex;
     }
 }
@@ -60,9 +60,6 @@ img, picture {
     padding-right: 4%;
 }
 
-.tm-light .content {
-    background-color: #eee;
-}
 
 .reddit-selected {
     font-weight: bold;
@@ -90,6 +87,19 @@ img, picture {
     flex-direction: column;
 }   
 
+.btn-nav {
+    background-color: initial;
+    border: none;
+    padding: .5rem;
+    color: silver;
+}
+
+.btn-nav:hover,
+.btn-nav:active,
+.btn-nav.active {
+    color: cornflowerblue;
+}
+
 .navigation-item {
     display: flex;
     align-items: baseline;
@@ -115,8 +125,9 @@ img, picture {
     color: silver;
 }
 
-.navigation-item > i:hover {
-    color: indianred;
+
+.navigation-item:hover > .btn-delete {
+    display: initial;
 }
 
 .navigation-item a:hover,
@@ -125,22 +136,24 @@ img, picture {
     color: cornflowerblue;
 }
 
-.edit-mode a:hover {
-    cursor: default;
-    color: #555;
+
+.navbar {
+    margin-bottom: .5rem;
 }
 
-.icon-navigation {}
+.btn-bars {}
 
-.icon-navigation > i {
-    padding: .5rem;
+.btn-delete {}
+.btn-delete:hover {
+    color: indianred;
+}
+
+.menu-list {
+    display: none;
     color: silver;
 }
-
-.icon-navigation i:hover,
-.icon-navigation i:active,
-.icon-navigation i.active {
-    color: cornflowerblue;
+.menu-list.active {
+    display: initial;
 }
 
 @media screen and (min-width: 768px) {
@@ -153,6 +166,10 @@ img, picture {
         overflow: auto;
         border-right: 1px solid #999;
     }
+
+    .btn-bars { display: none; }
+
+    .menu-list { display: initial; }
     
 }
 
@@ -272,7 +289,7 @@ Post styles
 
 
 /* 
-=========== Utility classes ===========
+Utility classes 
 */
 
 .cf::before, .cf::after {
@@ -292,3 +309,10 @@ Post styles
 .alco-center { align-content: center; }
 
 .alit-baseline { align-items: baseline; }
+
+
+/* 
+ Utylyty Style classes 
+ */
+
+ .bg-eee { background-color: #eee;}
