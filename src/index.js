@@ -20,5 +20,9 @@ app.ports.setStorage.subscribe(setStorage);
 
 
 function setStorage(reddits) {
-    localStorage.setItem(REDDITS_STORAGE, JSON.stringify(reddits));
+    if (reddits.length) {
+        localStorage.setItem(REDDITS_STORAGE, JSON.stringify(reddits));
+    } else {
+        localStorage.removeItem(REDDITS_STORAGE);
+    }
 }

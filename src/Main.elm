@@ -12,11 +12,19 @@ import Update exposing (update)
 import Reddit.Posts exposing (fetch)
 
 
+defaultSubreddits =
+    [ SubReddit "Movies" "Movies"
+    , SubReddit "Jokes" "Jokes"
+    , SubReddit "Programming" "Programming"
+    , SubReddit "Cats" "Cats"
+    ]
+
 init : Maybe (List SubReddit) -> ( Model, Cmd Msg )
 init mreddits  =
     let 
+        _ = Debug.log "Maybe Subreddits" mreddits
         subReddits =
-            Maybe.withDefault [] mreddits
+            Maybe.withDefault defaultSubreddits mreddits
         
         initSubReddit =
             List.head subReddits
